@@ -30,10 +30,16 @@ public class Project {
 		char[] chrArrayStr = in.toCharArray();
 		char[] numbers = extractInts(chrArrayStr);
 		for (int i = 0; i < numbers.length; i++) {
-			// numbers presented less than 12 will be invalid
-			System.out.println(numbers[i]);
-			if (numbers[i] <= 12) {
-				return false;
+			for (int j = i + 1; j < numbers.length - 1; j++) {
+				// numbers presented less than 12 will be invalid
+				System.out.println(numbers[i]);
+				if (numbers[i] == 1) {
+					if (numbers[j] <= 2) {
+						return false;
+					} else
+						return true;
+				} else if (numbers[i] >= 2 && numbers[i] <= 9)
+					return false;
 			}
 		}
 
@@ -47,6 +53,7 @@ public class Project {
 		else
 			return false;
 	}
+
 	public static char[] extractInts(char[] str) {
 		if (str.length > 0) {
 			char[] ints = new char[str.length];
@@ -69,10 +76,8 @@ public class Project {
 		System.out.println("Please enter a sentence.");
 		Scanner sc = new Scanner(System.in);
 		input = sc.nextLine();
-		System.out.println("Name: " + input);
-
+		System.out.println("Sentence: " + input);
 		boolean checkValidation = valid(input);
-
 		if (!checkValidation)
 			System.out.println("Invalid sentence");
 		else
