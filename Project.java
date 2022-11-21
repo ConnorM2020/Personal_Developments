@@ -6,8 +6,10 @@ public class Project {
 		// check first letter is capital
 		char cOne = in.charAt(0);
 		System.out.println("First: " + cOne);
-		if (!Character.isUpperCase(cOne))
+
+		if (!Character.isUpperCase(cOne) && cOne != '"') // valid check for quotes
 			return false;
+
 		// store last character
 		char last = (in.charAt(in.length() - 1)); // last character at last position
 		System.out.println("Last: " + last);
@@ -18,42 +20,47 @@ public class Project {
 		for (int i = 0; i < in.length(); i++) {
 			if (in.charAt(i) == '.')
 				periodCount++;
-
 			if (in.charAt(i) == '"')
 				quoteCount++;
 		}
 		// make sure if either one is invalid, then all invalid
+// found source from:
+// https://www.geeksforgeeks.org/extract-all-integers-from-a-given-string/?ref=rp
+// will gather all ints from a string and store into string array
+		char[] chrArrayStr = in.toCharArray();
+		char[] numbers = extractInts(chrArrayStr);
+		for (int i = 0; i < numbers.length; i++) {
+			// numbers presented less than 12 will be invalid
+			System.out.println(numbers[i]);
+			if (numbers[i] <= 12) {
+				return false;
+			}
+		}
 
-		// Check for numbers spelt below
-
-		// found source from:
-		// https://www.geeksforgeeks.org/extract-all-integers-from-a-given-string/?ref=rp
-		// will gather all ints from a string and store into string array
-		String[] spltIn = in.split("[^0-9]+");
-		// will extract all integers from string as array form
-		//int intSplit = Integer.parseInt(spltIn[0]);
-	//	System.out.println(intSplit);
-//		if (Integer.parseInt(spltIn[1] != null)) {
-//		int intSplitTwo = Integer.parseInt(spltIn[1]);
-////		
-//		if (intSplit == 1)
-//			if (intSplitTwo >= 3)
-//				return true;
-//			else
-//				return false;
-//
-////			if (intSplit <= 12)
-//				return false;
-//			else continue;
-
-		// final period count check towards end
+		// count for number of periods and even quotes
 		if (periodCount >= 2 || quoteCount % 2 != 0)
 			return false;
 
-		else if (periodCount == 1)
+		// final check at end
+		if (last == '.' || last == '!' || last == '?')
 			return true;
-		return true;
+		else
+			return false;
+	}
+	public static char[] extractInts(char[] str) {
+		if (str.length > 0) {
+			char[] ints = new char[str.length];
 
+			for (int i = 0; i < str.length; i++) {
+				if (str[i] - '0' >= 0 && str[i] - '0' <= 12) {
+					ints[i] += str[i];
+				}
+			}
+			return ints;
+		}
+		System.out.println("Empty array of numbers");
+
+		return null;
 	}
 
 	public static void main(String[] args) {
@@ -72,7 +79,7 @@ public class Project {
 			System.out.println("Valid Sentence.");
 
 	}
-
+// 
 //	for (int i = 0; i < in.length(); i++) {
 //	// if same, then invalid
 //	// make sure to compare all values in array set
@@ -83,4 +90,21 @@ public class Project {
 //		}
 //	}
 //}
+
+	// failed attempt
+	// int[] intStr = new int [spltIn.length]; // same length
+	// intStr[i] = Integer.parseInt(spltIn[i]);
+//	for (int i = 0; i < spltIn.length; i++) {
+//		for (int j = i + 1; j < spltIn.length - 1; j++) {
+//			System.out.println(spltIn[i] + " ");
+//			// store each string number as an integer
+//			if (spltIn[i].charAt(i) >= '1' && spltIn[i].charAt(i) <= '9') {
+//				return false;
+//			}
+//			if (spltIn[j].charAt(j) >= 3)
+//				continue;
+//			else
+//				return false;
+//		}
+//	}
 }
